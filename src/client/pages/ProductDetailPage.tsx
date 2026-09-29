@@ -10,6 +10,7 @@ import { ApiError } from "../../types/ApiError";
 import LoadingSpinner from '../shared/components/LoadingSpinner.tsx';
 import ProductImage from '../shared/components/ProductImage.tsx';
 import StarRating from '../shared/components/StarRating.tsx';
+import { ValidationError } from '../../types/ValidationError.ts';
 
 const BADGE_CLASSES: Record<string, string> = {
   New: 'badge-new',
@@ -48,7 +49,11 @@ export default function ProductDetailPage() {
         setProductData(data as ApiResponse<ProductDetail>);
       } catch (err) {
         setProductError(
-          err instanceof ApiError ? err : new Error('Failed to load product'),
+          err instanceof ApiError
+            ? err
+            : err instanceof ValidationError
+              ? err
+              : new Error('Failed to load product'),
         );
       } finally {
         setProductLoading(false);
@@ -99,6 +104,24 @@ export default function ProductDetailPage() {
     await submitReview(id, formData);
     setSubmitting(false);
   }
+
+  if (productError instanceof ValidationError) {
+    return (
+      <div className="flex items-center justify-center px-4 py-24">
+        <div className="bg-white rounded-2xl shadow-card p-10 max-w-lg w-full text-center">
+          <p className="text-5xl mb-6">🔍</p>
+          <h1 className="text-xl font-bold text-ps-inky-blue mb-1">We received unexpected data</h1>
+          <p className="text-sm text-ps-purple-gray mb-8">
+            Something about this response didn't match what we expected. Our team has been notified.
+          </p>
+          <Link to="/products" className="btn-primary">
+            Back to Products
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
 
   if (productError instanceof ApiError && productError.status === 404) {
     return (
@@ -215,7 +238,7 @@ export default function ProductDetailPage() {
               Features
             </h2>
             <ul className="space-y-1.5">
-              {product! .features.map((feature, i) => (
+              {product!.features.map((feature, i) => (
                 <li
                   key={i}
                   className="flex items-start gap-2 text-sm text-gray-600"
@@ -266,7 +289,7 @@ export default function ProductDetailPage() {
               },
               {
                 label: 'Fertilizing',
-                value: product!   .careInstructions.fertilizing,
+                value: product!.careInstructions.fertilizing,
                 style: 'bg-ps-lime-green text-ps-inky-blue',
               },
               {
@@ -294,7 +317,7 @@ export default function ProductDetailPage() {
         <div className="bg-white rounded-lg shadow-card overflow-hidden">
           <table className="w-full text-sm">
             <tbody>
-              {product! .specifications.map(({ label, value }, i) => (
+              {product!.specifications.map(({ label, value }, i) => (
                 <tr
                   key={label}
                   className={i % 2 === 0 ? 'bg-ps-surface' : 'bg-white'}
