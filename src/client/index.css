@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: var(--color-ps-surface);
+    color: var(--color-gray-900);
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--color-ps-pink);
+    color: white;
+    border-radius: var(--radius-pill);
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 200ms;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-ps-pink-dark);
+  }
+
+  .btn-primary:focus {
+    outline: 2px solid var(--color-ps-pink);
+    outline-offset: 2px;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid var(--color-ps-inky-blue);
+    border-radius: var(--radius-pill);
+    color: var(--color-ps-inky-blue);
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 200ms, color 200ms;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-ps-inky-blue);
+    color: white;
+  }
+
+  .card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 300ms;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .badge {
+    border-radius: 9999px;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .badge-new {
+    background-color: var(--color-ps-blue);
+    color: var(--color-ps-inky-blue);
+  }
+
+  .badge-bestseller {
+    background-color: var(--color-ps-lime-green);
+    color: var(--color-ps-inky-blue);
+  }
+
+  .badge-limited {
+    background-color: var(--color-ps-pink);
+    color: white;
+  }
+}

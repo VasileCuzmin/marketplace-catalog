@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": false,
+    "outDir": "./dist/api",
+    "types": ["node"]
+  },
+  "include": [
+    "src/api/**/*" // Include all TypeScript files in the API source directory
+    //"src/api/**/*" - what does it mean? It is a glob pattern that matches all files and subdirectories under src/api.
+  ],
+  "exclude": [
+    "node_modules" // Exclude the node_modules directory from the API compilation
+  ]
+}
