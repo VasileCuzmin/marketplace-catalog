@@ -6,6 +6,7 @@ import type { CareInstructions } from './CareInstructions.ts';
 import type { SpecificationEntry } from './SpecificationEntry.ts';
 
 export interface ProductDetail extends Product {
+  createdAt: number;
   description: string;
   petSafe: boolean;
   features: string[];
